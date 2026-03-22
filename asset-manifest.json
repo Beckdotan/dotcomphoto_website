@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/dotcomphoto_website/static/css/main.2ce8f108.css",
+    "main.js": "/dotcomphoto_website/static/js/main.0084857f.js",
+    "index.html": "/dotcomphoto_website/index.html",
+    "main.2ce8f108.css.map": "/dotcomphoto_website/static/css/main.2ce8f108.css.map",
+    "main.0084857f.js.map": "/dotcomphoto_website/static/js/main.0084857f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2ce8f108.css",
+    "static/js/main.0084857f.js"
+  ]
+}
