@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useCallback } from 'react';
-import './ScrollCanvas.css';
 
-export default function ScrollCanvas({ framesRef, activeVideo, videoConfig }) {
+export default function ScrollCanvas({ framesRef, activeVideo, videoConfig, loaded }) {
   const canvasRef = useRef(null);
   const currentFrameRef = useRef(0);
 
@@ -54,7 +53,7 @@ export default function ScrollCanvas({ framesRef, activeVideo, videoConfig }) {
     const onScroll = () => {
       const scrollTop = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollFraction = scrollTop / maxScroll;
+      const scrollFraction = maxScroll > 0 ? scrollTop / maxScroll : 0;
       const frameIndex = Math.min(
         Math.floor(scrollFraction * videoConfig.totalFrames),
         videoConfig.totalFrames - 1
@@ -70,15 +69,17 @@ export default function ScrollCanvas({ framesRef, activeVideo, videoConfig }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, [drawFrame, videoConfig]);
 
-  // Redraw frame 0 when active video changes
+  // Draw frame 0 when loading completes or active video changes
   useEffect(() => {
+    if (!loaded) return;
     currentFrameRef.current = 0;
+    resize();
     drawFrame(0);
-  }, [activeVideo, drawFrame]);
+  }, [activeVideo, loaded, drawFrame, resize]);
 
   return (
-    <div className="scroll-container">
-      <canvas ref={canvasRef} className="scroll-canvas" />
+    <div className="video-canvas-fixed">
+      <canvas ref={canvasRef} />
     </div>
   );
 }
