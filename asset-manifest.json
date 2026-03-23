@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/dotcomphoto_website/static/css/main.48845f63.css",
-    "main.js": "/dotcomphoto_website/static/js/main.f77bf149.js",
+    "main.js": "/dotcomphoto_website/static/js/main.ca967ac7.js",
     "index.html": "/dotcomphoto_website/index.html",
     "main.48845f63.css.map": "/dotcomphoto_website/static/css/main.48845f63.css.map",
-    "main.f77bf149.js.map": "/dotcomphoto_website/static/js/main.f77bf149.js.map"
+    "main.ca967ac7.js.map": "/dotcomphoto_website/static/js/main.ca967ac7.js.map"
   },
   "entrypoints": [
     "static/css/main.48845f63.css",
-    "static/js/main.f77bf149.js"
+    "static/js/main.ca967ac7.js"
   ]
 }
