@@ -47,11 +47,11 @@ function CinematicHero({ onNavigate }) {
           }}
         />
 
-        {/* Text area — centered above the buttons, text crossfades here */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pb-24">
-          {/* Phase 1: Main Title */}
+        {/* Text + buttons — all in one centered container so they move together */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center pb-36 md:pb-24">
+          {/* Phase 1: Main Title + Buttons */}
           <div
-            className="absolute text-center px-6 max-w-5xl pointer-events-none"
+            className="text-center px-6 max-w-5xl"
             style={{ opacity: titleOpacity, transform: `translateY(${titleY}px)` }}
           >
             <span
@@ -66,9 +66,29 @@ function CinematicHero({ onNavigate }) {
             >
               What the Eye Sees.<br />What the Heart <span className="italic">Remembers</span>.<br />What the Art Becomes.
             </h1>
+            {/* Buttons — inside the title block */}
+            <div
+              className="mt-10"
+              style={{ opacity: ctaOpacity, pointerEvents: ctaOpacity < 0.1 ? 'none' : 'auto' }}
+            >
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <button
+                  onClick={() => onNavigate('gallery')}
+                  className="px-10 py-4 bg-primary/90 text-on-primary font-label text-xs uppercase tracking-[0.2em] hover:bg-primary transition-colors duration-300 backdrop-blur-sm"
+                >
+                  Enter the Gallery
+                </button>
+                <button
+                  onClick={() => onNavigate('learning')}
+                  className="px-10 py-4 bg-white/5 border border-white/15 text-primary font-label text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+                >
+                  Learning Center
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Phase 2: Quote — nudged down to align with title text (not label) */}
+          {/* Phase 2: Quote — sits in the same centered space */}
           <div
             className="absolute text-center px-6 max-w-3xl pointer-events-none mt-6"
             style={{ opacity: taglineOpacity, transform: `translateY(${taglineY}px)` }}
@@ -81,27 +101,6 @@ function CinematicHero({ onNavigate }) {
               "Night photography is a conversation with time. You open the shutter, and for thirty seconds, the universe paints itself onto your sensor."
             </p>
             <div className="w-16 h-[1px] bg-tertiary/40 mx-auto mt-8" />
-          </div>
-        </div>
-
-        {/* CTAs — fade out when quote is showing */}
-        <div
-          className="absolute top-[62%] left-0 right-0 flex justify-center md:pt-[50px]"
-          style={{ opacity: ctaOpacity, pointerEvents: ctaOpacity < 0.1 ? 'none' : 'auto' }}
-        >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <button
-              onClick={() => onNavigate('gallery')}
-              className="px-10 py-4 bg-primary/90 text-on-primary font-label text-xs uppercase tracking-[0.2em] hover:bg-primary transition-colors duration-300 backdrop-blur-sm"
-            >
-              Enter the Gallery
-            </button>
-            <button
-              onClick={() => onNavigate('learning')}
-              className="px-10 py-4 bg-white/5 border border-white/15 text-primary font-label text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-            >
-              Learning Center
-            </button>
           </div>
         </div>
 

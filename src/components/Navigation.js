@@ -20,9 +20,13 @@ export default function Navigation({ activePage, onNavigate, blurEnabled = true 
       <div className="flex justify-between items-center px-8 py-4 w-full max-w-none">
         <button
           onClick={() => onNavigate('home')}
-          className="text-lg font-headline italic text-primary/90 tracking-tight hover:text-primary transition-colors duration-300"
+          className="hover:opacity-80 transition-opacity duration-300"
         >
-          The Digital Gallery
+          <img
+            src={`${process.env.PUBLIC_URL}/logo.png`}
+            alt="dotcomphoto"
+            className="h-8"
+          />
         </button>
         <div className="hidden md:flex items-center gap-10 font-headline text-[13px] font-light tracking-wide">
           {pages.map((page) => (
