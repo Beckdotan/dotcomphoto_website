@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#111412",
+              "surface-container-high": "#282b29",
+              "inverse-on-surface": "#2e312f",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "on-secondary-container": "#c8b5a5",
+              "surface-container": "#1d201e",
+              "on-tertiary": "#402d00",
+              "on-surface": "#e1e3df",
+              "surface-dim": "#111412",
+              "surface-container-low": "#191c1a",
+              "secondary-container": "#54473a",
+              "primary-fixed": "#d4e7d8",
+              "background": "#111412",
+              "surface-bright": "#373a38",
+              "surface-tint": "#b8cbbc",
+              "secondary-fixed": "#f3dfce",
+              "inverse-surface": "#e1e3df",
+              "on-primary-container": "#96a99b",
+              "error": "#ffb4ab",
+              "tertiary": "#e7c17a",
+              "surface-container-lowest": "#0c0f0d",
+              "primary-fixed-dim": "#b8cbbc",
+              "on-tertiary-fixed-variant": "#5c4305",
+              "on-secondary": "#3a2e23",
+              "inverse-primary": "#516356",
+              "on-error-container": "#ffdad6",
+              "secondary-fixed-dim": "#d6c3b3",
+              "outline-variant": "#434844",
+              "on-secondary-fixed": "#241a0f",
+              "primary-container": "#2d3e33",
+              "secondary": "#d6c3b3",
+              "on-tertiary-fixed": "#261900",
+              "tertiary-container": "#4c3600",
+              "on-primary-fixed-variant": "#394b3f",
+              "tertiary-fixed-dim": "#e7c17a",
+              "primary": "#b8cbbc",
+              "on-primary": "#233429",
+              "surface-container-highest": "#323533",
+              "tertiary-fixed": "#ffdea3",
+              "surface-variant": "#323533",
+              "on-tertiary-container": "#c19f5c",
+              "on-primary-fixed": "#0e1f15",
+              "on-background": "#e1e3df",
+              "on-secondary-fixed-variant": "#514438",
+              "outline": "#8d928d",
+              "on-surface-variant": "#c3c8c2"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+        }
+        .glass-nav {
+            background-color: rgba(17, 20, 18, 0.6);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-tertiary selection:text-on-tertiary">
+<!-- TopNavBar Implementation from JSON -->
+<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-12 py-6 max-w-none w-full">
+<div class="text-xl font-headline tracking-tighter text-tertiary">The Curated Wilderness</div>
+<div class="hidden md:flex items-center space-x-12 font-headline text-sm tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Gallery</a>
+<a class="text-tertiary border-b border-tertiary/30 pb-1" href="#">Learning</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+</div>
+<div class="flex items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Hero Section -->
+<header class="px-12 mb-24 max-w-7xl">
+<div class="inline-block px-3 py-1 mb-6 border border-outline-variant/20 rounded-full">
+<span class="text-tertiary font-label text-xs uppercase tracking-widest">Educational Resource Hub</span>
+</div>
+<h1 class="font-headline text-6xl md:text-8xl text-on-surface tracking-tighter mb-8 leading-[0.9]">
+                Cultivating <br/>the <span class="italic text-tertiary">Observant Eye</span>.
+            </h1>
+<p class="max-w-2xl text-on-surface-variant text-lg leading-relaxed">
+                From field expeditions in the Arctic to technical post-processing masterclasses, our learning hub is designed for those who seek to bridge the gap between seeing and storytelling.
+            </p>
+</header>
+<!-- Section 1: Guiding & Workshops (Bento Layout) -->
+<section class="px-12 mb-32">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+<div class="max-w-xl">
+<span class="text-tertiary font-label text-sm uppercase tracking-widest block mb-2">01 / Expeditions</span>
+<h2 class="font-headline text-4xl text-on-surface">Guiding &amp; Workshops</h2>
+</div>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-widest">Viewing the Wilderness First-Hand</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<!-- Main Workshop Card -->
+<div class="md:col-span-8 group relative overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60 z-10"></div>
+<img alt="Workshop in the mountains" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Photographer standing on a misty mountain peak at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz-9hkqu8-8zsvyi3Jcnb59-_JG1bsFR8vsrrl0Ke2FlnpMqBc6EH_tKO1M4hmi6OGqt7thtm5Igg_8L9NOYgEQAPwBJdAMEswOi0q3ByADgM3qyEgP3SbMCZdh0Mxcrkg9JbSNN_EprQmwRA6SRXOfu5qm0O3PSQgwW_-WD8904X-_ovnCpICMHZhxAZMkqFY7syKiKiehjyPEOA-3vqkLSv7FArq9OrTmLzN5Wlc3lvUdBj0Jyl0W65jlL22a7LTRIMM-zqWawTr"/>
+<div class="absolute bottom-0 left-0 p-10 z-20">
+<div class="flex gap-4 mb-4">
+<span class="bg-tertiary text-on-tertiary text-[10px] font-bold px-2 py-0.5 uppercase tracking-tighter">October 2024</span>
+<span class="text-on-surface/60 text-[10px] font-bold uppercase tracking-widest">3 Slots Left</span>
+</div>
+<h3 class="font-headline text-3xl mb-4">The Icelandic Highlands: A Vertical Study</h3>
+<p class="text-on-surface-variant max-w-md mb-6 font-body text-sm">Join a 7-day immersive expedition focused on capturing the raw textures of basaltic landscapes and glacial runoff.</p>
+<button class="bg-primary text-on-primary px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed-dim transition-colors">Apply for Expedition</button>
+</div>
+</div>
+<!-- Secondary Workshop Card -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="flex-1 group relative overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-surface/40 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+<img alt="Coastal workshop" class="absolute inset-0 w-full h-full object-cover" data-alt="Sunlight filtering through ancient forest canopy with misty air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6pUmrQNhfzksuSfYGf4UWkFNMuD8Aa18gacB2yrNxJ83EdbuMwDFJYDOvlGaZwN6b9Xn71aBD1EGbL5BjsLvVeM1EIvSDecgWyXWmR4oPbdlV-JKhEBx8yBHpWxiAZ8f6et796I8eFPvna5JmPETCw5k5XXCCNeyqt6izr2QAWmSujyQhylod9Q1glR8mPyXvBgj4_4C-f39hHrGhBCj1nVBYWqMtUTNdhOn3L-NAhTrO-U3jqHfu15PHe0GttIVVVA3HCLTRkI1g"/>
+<div class="absolute inset-0 p-8 z-20 flex flex-col justify-end">
+<h4 class="font-headline text-xl">The Temperate Rainforest</h4>
+<p class="text-tertiary text-xs mt-2 uppercase tracking-widest">Vancouver Island</p>
+</div>
+</div>
+<div class="flex-1 group relative overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-surface/40 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+<img alt="Desert workshop" class="absolute inset-0 w-full h-full object-cover" data-alt="Sand dunes under a deep blue starlit night sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjyUOaxwtIwO91h6jGqpqEw9bZ4TII5m2zFZp3pWcYvFktFrumPGUqfzgEbFYIEGrEUPpGmGNyH6HsTRwLEElxaJr6pa17ywFG2caBRRIAggqCWPpbschsUHMJTbeCGsfRkceYFhTnx4dA50dvioEfwHb9lCfl12U1F6wPQ2-hVUpJRxGMzOT2JOBFmVTvMzAVql7hCrxehQik1e88djWCIGA7X03h7okqp9ct1INgoj-NihAgBaSCEY_cnx7baU6JsQsH5GxPmP7U"/>
+<div class="absolute inset-0 p-8 z-20 flex flex-col justify-end">
+<h4 class="font-headline text-xl">Arid Minimalism</h4>
+<p class="text-tertiary text-xs mt-2 uppercase tracking-widest">Namib-Naukluft</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Free Learning (Video List) -->
+<section class="bg-surface-container-low py-32">
+<div class="px-12 max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start mb-20">
+<div class="max-w-xl">
+<span class="text-tertiary font-label text-sm uppercase tracking-widest block mb-2">02 / Community</span>
+<h2 class="font-headline text-4xl text-on-surface mb-6">Free Learning</h2>
+<p class="text-on-surface-variant">Weekly insights into my creative process, equipment deep-dives, and philosophical musings on the role of nature in the digital age.</p>
+</div>
+<a class="mt-8 md:mt-0 flex items-center gap-4 group" href="#">
+<span class="text-on-surface font-label text-xs uppercase tracking-widest">Visit YouTube Channel</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center group-hover:bg-tertiary group-hover:border-tertiary transition-all">
+<span class="material-symbols-outlined text-on-surface group-hover:text-on-tertiary" data-icon="play_arrow">play_arrow</span>
+</div>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Video Card -->
+<div class="space-y-6">
+<div class="aspect-video relative overflow-hidden bg-surface-container">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="Macro photography of a dew drop on a leaf blade" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPK32q32Gz4AXeTJZ8LnRfhJt0r1KVH9A2_8gMwRZ6lpSJXMgvKqBN0Mma8ald0p2kahGo-dJMhTrQZZXGvUHQgGh8ymwADX6m-JfDpoJytz0XzazogQ3DD2-zQ812Pq3rdwtnnbNhMvI_lWYPYIhoi4GEzgtBvQ-6-lyRQI6RxwslevYVdriJebbw4RMoEjsIpWqYd4PzrFWs3l58IiWH3dkjC6hjbB3r-Aitn4xCK5E_fN2giXTHsVosGbOpJAsOikEvdD10f3MC"/>
+<div class="absolute bottom-4 right-4 bg-surface/80 backdrop-blur px-2 py-1 text-[10px] font-bold">14:22</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-widest">Technique</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">2 Days Ago</span>
+</div>
+<h3 class="font-headline text-xl hover:text-tertiary cursor-pointer transition-colors">The Art of the Silent Frame</h3>
+</div>
+</div>
+<!-- Video Card -->
+<div class="space-y-6">
+<div class="aspect-video relative overflow-hidden bg-surface-container">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="Long exposure of a waterfall in a deep green forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASzMg20QSluNYRohlzHUs7eKyJx-Y_zJPcwvB2r9V_mrc8X4FsD6CvfiRP0pQ6GORYE471bml1OH8uE45kGahDpn_mkIDzVDoxUlKNV-LFylVq8YHchzvFS-10olCgq-nTR30rAgJUqwslQ7LrKIzzVpGzLCW_cDMf5C6BgQD9RC-fomnAPg3VG4V1e-OhrgJH3JMqT7yi4XuG5E25pMWeo5OeTJ53kfC9990H_y_y-kpRBA1F9xEa9AWgGqGjLxXJVi3n8pBbrXZ1"/>
+<div class="absolute bottom-4 right-4 bg-surface/80 backdrop-blur px-2 py-1 text-[10px] font-bold">08:45</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-widest">Gear</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">1 Week Ago</span>
+</div>
+<h3 class="font-headline text-xl hover:text-tertiary cursor-pointer transition-colors">Packing for the Arctic: Lightweight Expeditions</h3>
+</div>
+</div>
+<!-- Video Card -->
+<div class="space-y-6">
+<div class="aspect-video relative overflow-hidden bg-surface-container">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="Misty rays of light breaking through tall redwood trees" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9CNxx3TMGUb3NMS80bleXomx5TFIjTPgMUfQq9xF2s8soUFZ65NG71J-_lAzt-Z72HMp_8JUR7As-bQf5SViCjY82kL-VeZu_lHTPckp-XZR9fNEKbmoo7QW8zTqTNeevJxrni2TKmN_9bAztD-fsNJVET6FG_zdJOiiDXn8JYt0bI4frDvCY3dn_oHQqj_Uuo_zKDDoTVxZf1N8bBLsFaIYFhZRzyzNNADf4wG5RJUWdXH6iU8uaroPEAjDUGmmPpH33zzAWIZFi"/>
+<div class="absolute bottom-4 right-4 bg-surface/80 backdrop-blur px-2 py-1 text-[10px] font-bold">21:10</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-widest">Philosophy</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-on-surface-variant font-label text-[10px] uppercase tracking-widest">2 Weeks Ago</span>
+</div>
+<h3 class="font-headline text-xl hover:text-tertiary cursor-pointer transition-colors">Waiting for the Light: A Lesson in Patience</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Masterclasses (Cards with Tonal Layering) -->
+<section class="px-12 py-32">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-24">
+<span class="text-tertiary font-label text-sm uppercase tracking-widest block mb-4">03 / Specialization</span>
+<h2 class="font-headline text-5xl text-on-surface">Masterclasses</h2>
+<div class="w-24 h-px bg-tertiary/30 mx-auto mt-8"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+<!-- Course 1 -->
+<div class="flex flex-col md:flex-row bg-surface-container-highest/30 overflow-hidden group">
+<div class="w-full md:w-1/2 aspect-square relative">
+<img alt="Course imagery" class="w-full h-full object-cover" data-alt="Abstract aerial view of turquoise river veins in dark sand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK16wqwJIj_EJvN05J1Of6Jn-VvY16eSneV-HVJTDB0_jWMRPkfHyKyU5wzfHasDWFJ8dtSIr5dr3xW48oEZa26wcOICt6EeTFD726H2lTTk-VtM466Bf7jj0igPmDB77zvyTwojQCZmnFJUZvPXBO4G1US7WpBQJefi-OkxgrVKvOgGs3NbDuYYjAFu63ufibujmZlt83B-u531o9f_lVv-Oobv-65obK85w2P8HGiOPzeYI3En_ebjsYJRSzQz7cZcXqlavVd1_F"/>
+</div>
+<div class="w-full md:w-1/2 p-10 flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-4 group-hover:text-tertiary transition-colors">Color Mastery: The Natural Palette</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                                    Deep dive into tonal separation and natural light color grading using the wilderness as your primary reference point.
+                                </p>
+<div class="flex flex-wrap gap-4 mb-8">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Duration</span>
+<span class="text-tertiary text-xs font-bold">12 Modules</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Level</span>
+<span class="text-tertiary text-xs font-bold">Advanced</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 border border-outline-variant/30 text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-surface transition-all">View Curriculum</button>
+</div>
+</div>
+<!-- Course 2 -->
+<div class="flex flex-col md:flex-row bg-surface-container-highest/30 overflow-hidden group">
+<div class="w-full md:w-1/2 aspect-square relative">
+<img alt="Course imagery" class="w-full h-full object-cover" data-alt="Lone tree on a rolling green hill under a dramatic sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZit_r1KpQJDY2XDEc-mRNCrxkE4LuR1rdPrRW5S3JOxoUI0VNmBLy5P3IfSWDcoHnNHvhkWtkGE28RV0CHA49Bf8q4crYt9NxrAcMnmKWHJZIqcJ8SUaHAnoi2UoaI9YUcb63kMJbcH8F63-cJWFX6OUipzTeZBPbOGLdYCKWUNEnAtq7a0hYI2f0z0EiM1sKaRWCVRdmCMXi4xxxby9ssmXjPukbIU266T9c42SFaExMGnEhdQ8JJRJQ3wvcywuyCFDNysUh35f-"/>
+</div>
+<div class="w-full md:w-1/2 p-10 flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-4 group-hover:text-tertiary transition-colors">Composition &amp; Intent</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+                                    Moving beyond the rule of thirds. Learn how to use negative space and organic geometry to create high-end visual rhythm.
+                                </p>
+<div class="flex flex-wrap gap-4 mb-8">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Duration</span>
+<span class="text-tertiary text-xs font-bold">8 Modules</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Level</span>
+<span class="text-tertiary text-xs font-bold">Intermediate</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 border border-outline-variant/30 text-on-surface text-xs font-bold uppercase tracking-widest hover:bg-on-surface hover:text-surface transition-all">View Curriculum</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="px-12 mb-32">
+<div class="max-w-5xl mx-auto bg-primary-container p-16 relative overflow-hidden">
+<div class="absolute right-0 top-0 w-1/3 h-full bg-surface-container-low opacity-20 -skew-x-12 translate-x-12"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<h2 class="font-headline text-3xl mb-4">Join the Inner Circle</h2>
+<p class="text-on-primary-container max-w-md mb-8">Receive early access to workshop dates and exclusive processing tutorials once a month.</p>
+<form class="flex flex-col md:flex-row w-full max-w-lg gap-4">
+<input class="flex-grow bg-surface/50 border-none px-6 py-4 focus:ring-1 focus:ring-tertiary text-sm font-body" placeholder="Your email address" type="email"/>
+<button class="bg-tertiary text-on-tertiary px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-tertiary-fixed transition-colors">Subscribe</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Implementation from JSON -->
+<footer class="bg-surface-container-low w-full py-20 px-12 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="space-y-6">
+<div class="text-lg font-headline text-tertiary">The Curated Wilderness</div>
+<p class="max-w-xs text-on-surface-variant font-body text-xs leading-relaxed">
+                    A digital gallery and educational resource dedicated to the preservation of sight and soul.
+                </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-4">
+<div class="flex flex-col gap-3">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold">Navigate</span>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Workshops</a>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">YouTube</a>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Courses</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold">Legal</span>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-[10px] uppercase tracking-widest text-tertiary font-bold">Social</span>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="text-on-surface-variant font-label text-xs tracking-tight hover:text-tertiary transition-colors opacity-80 hover:opacity-100" href="#">Vero</a>
+</div>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">© 2024 The Curated Wilderness. All Rights Reserved.</p>
+<div class="flex gap-6">
+<span class="text-[10px] text-on-surface-variant opacity-40">Built for the Observant</span>
+</div>
+</div>
+</footer>
+</body></html>

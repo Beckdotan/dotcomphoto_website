@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 
@@ -8,15 +8,40 @@ const categories = [
     label: 'Exploration 01',
     title: 'Night',
     subtitle: 'Stars, silence, and the celestial dance',
-    cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjWtSKwi6oZirogpm-7Mi5-8PYolEDWIbzNZ6SLFWqTfKv8xyvhy5nMh6w6GPoBRJlb-eb38TEnsMWT7TUYz6d5zOiFAV82jYqSHjdB9ZdGtJ5mrB05EBSgGiKMuwH1b9IkUhh6IJi8OXRACNe-_FF2BKtpO-MKEEatiJpAGnzbHXe91SPHXW0PHcGmkFL1no48ysH-OcijZ_VWkQ6Rvw6AbIEFbJOy9hkm7vEik-Q-J4my-djwG-6U7vieGkSh-KK_BwUlfCoGdj3',
+    cover: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto/v1774334429/%D7%A2%D7%95%D7%AA%D7%A7_%D7%A9%D7%9C_1_wcbfwi.jpg',
     description: 'Under the vast canopy of stars, the wilderness reveals a side unseen by day. These images capture the celestial dance above Earth\'s most remote landscapes.',
+    // Featured: triptych row then full-width, before masonry
+    featured: {
+      triptych: [
+        'https://res.cloudinary.com/diepbwdm5/image/upload/w_600,q_auto,f_auto/v1774262334/5_Large_qf7zvm.jpg',
+        'https://res.cloudinary.com/diepbwdm5/image/upload/w_600,q_auto,f_auto/v1774250319/small_1_wnjmrc.jpg',
+        'https://res.cloudinary.com/diepbwdm5/image/upload/w_600,q_auto,f_auto/v1774253991/3_1_Large_n8jrgv.jpg',
+      ],
+      hero: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto/v1774263759/e34be070-3626-4b63-a10e-222a8dff8a7d_egyccx.jpg',
+    },
+    featuredCount: 4, // first 4 photos are in the featured section, skip in masonry
     photos: [
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjWtSKwi6oZirogpm-7Mi5-8PYolEDWIbzNZ6SLFWqTfKv8xyvhy5nMh6w6GPoBRJlb-eb38TEnsMWT7TUYz6d5zOiFAV82jYqSHjdB9ZdGtJ5mrB05EBSgGiKMuwH1b9IkUhh6IJi8OXRACNe-_FF2BKtpO-MKEEatiJpAGnzbHXe91SPHXW0PHcGmkFL1no48ysH-OcijZ_VWkQ6Rvw6AbIEFbJOy9hkm7vEik-Q-J4my-djwG-6U7vieGkSh-KK_BwUlfCoGdj3', title: 'Celestial Canopy', location: 'Yellowstone', ratio: '16/9' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCjyUOaxwtIwO91h6jGqpqEw9bZ4TII5m2zFZp3pWcYvFktFrumPGUqfzgEbFYIEGrEUPpGmGNyH6HsTRwLEElxaJr6pa17ywFG2caBRRIAggqCWPpbschsUHMJTbeCGsfRkceYFhTnx4dA50dvioEfwHb9lCfl12U1F6wPQ2-hVUpJRxGMzOT2JOBFmVTvMzAVql7hCrxehQik1e88djWCIGA7X03h7okqp9ct1INgoj-NihAgBaSCEY_cnx7baU6JsQsH5GxPmP7U', title: 'Desert Stars', location: 'Namib-Naukluft', ratio: '2/3' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRkulzW0wwNNlHsOltXRbOo-emt4NZJgBWqo78JgVsnjZw6siVH0AjsFX0kQLBSUrhZTfa6Q0vded2PQPOGlYCXvEgf9M6mjm3GRJscoXEmyBiGf_AoYBBWjXCILLqPKpqXjrLsEgdiZOwwKqSqUwS6OMEgSmsoonjh-6Fq_XJyE9fHRSR5hlguNBeAYiJjBjkFX_hHYbyZ2DNAXJ1qutYrArinboDrTZUcAIJwtq94GlO3CuVSZ1qg06NrraXtwdUdntaarWRFES8', title: 'Twilight Ridge', location: 'Iceland', ratio: '3/2' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAPK32q32Gz4AXeTJZ8LnRfhJt0r1KVH9A2_8gMwRZ6lpSJXMgvKqBN0Mma8ald0p2kahGo-dJMhTrQZZXGvUHQgGh8ymwADX6m-JfDpoJytz0XzazogQ3DD2-zQ812Pq3rdwtnnbNhMvI_lWYPYIhoi4GEzgtBvQ-6-lyRQI6RxwslevYVdriJebbw4RMoEjsIpWqYd4PzrFWs3l58IiWH3dkjC6hjbB3r-Aitn4xCK5E_fN2giXTHsVosGbOpJAsOikEvdD10f3MC', title: 'Moonlit Dew', location: 'Olympic Peninsula', ratio: '4/5' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB9CNxx3TMGUb3NMS80bleXomx5TFIjTPgMUfQq9xF2s8soUFZ65NG71J-_lAzt-Z72HMp_8JUR7As-bQf5SViCjY82kL-VeZu_lHTPckp-XZR9fNEKbmoo7QW8zTqTNeevJxrni2TKmN_9bAztD-fsNJVET6FG_zdJOiiDXn8JYt0bI4frDvCY3dn_oHQqj_Uuo_zKDDoTVxZf1N8bBLsFaIYFhZRzyzNNADf4wG5RJUWdXH6iU8uaroPEAjDUGmmPpH33zzAWIZFi', title: 'Forest Glow', location: 'Redwoods', ratio: '5/4' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSPXtyLCFyprxcqZ5Wb-AOhVDivgqwywKRm5-fWYDFiW6isYVdZkELioTwdbw1Xwh8OY6zvStPZXrcryGogM4B401o1JiWlAUBNXRtd5JbBIKtHBNv8h7lNZWNPqWsWjZSX_K_zOZ_QM7x7kQmjfZlUTudBbm5eS-SSUPY2WSULRwRUlVGjm4DblLptsAeX2EBqHt2JXWhADtCgd-UDc6dP3z94-4veplFMjYjavkym-YMhg4XnCZTSB5D1t_fJKCNnSwmGrKOGDnt', title: 'Ancient Fog', location: 'Olympic Peninsula', ratio: '3/4' },
+      // Featured images (shown in triptych + hero, also used for lightbox navigation)
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262334/5_Large_qf7zvm.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250319/small_1_wnjmrc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774253991/3_1_Large_n8jrgv.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263759/e34be070-3626-4b63-a10e-222a8dff8a7d_egyccx.jpg', title: '', location: '' },
+      // Rest of the gallery
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263906/7e831d42-aac7-456a-9fac-18327688b842_cbltcv.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263528/untitled--7_Large_p2uyde.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262404/%D7%9E%D7%A9%D7%95%D7%9C%D7%91_Large_ynyw2p.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262397/%D7%9C%D7%91%D7%93_%D7%9E%D7%95%D7%9B%D7%9F_%D7%90%D7%99%D7%A0%D7%A1%D7%98%D7%92%D7%A8%D7%9D_Large_rcfo3f.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250341/8_n7xxhc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250394/47244c72-aefb-4d50-9c02-04a965d71f12_vjqfcc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774334429/%D7%A2%D7%95%D7%AA%D7%A7_%D7%A9%D7%9C_1_wcbfwi.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262345/12_Large_axpsjc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262349/DSC_0251_Large_pwejga.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262360/DSC_0272_Large_ghgrps.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262377/untitled-2_Large_ny59fc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262382/nomoon_Large_nhm7fj.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262389/DSC_6411_Large_bggfbf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262393/untitled-7400_Large_m1lovv.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263459/DSC_0456-Edit_gcytkt.jpg', title: '', location: '' },
     ],
   },
   {
@@ -24,17 +49,22 @@ const categories = [
     label: 'Exploration 02',
     title: 'Landscape',
     subtitle: 'The grand architecture of the natural world',
-    cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHCZQBeRGc-zFHlh1d1lDJGP2fhkKeHnB7vhD8Q027Do6tLIxrqIJ5_aQoC2og35tmNIv1fibyHhkLWfK_rJ2G3jggEoQ1nA4LH9zzv58K-XlCmAhA-jXVyGZohMJrkv0fkNRFe_2JQ9Xr6zyrJ7vK444xqI80yq4f9YpqNESj7UDoyLAIlWFCPWCG0DFT8u_DmcYLTjI09gg-mUsE6BL28_UUiIS3FVxkIlNf4u1wTDd606n_zvQI6sAsjzZgsgYSs8tHFCidL30Y',
+    cover: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto/v1774262363/Duplicate_State_Large_nild4p.jpg',
     description: 'From volcanic ridges to glacial valleys, these images document the raw geometry of Earth\'s most dramatic terrain.',
     photos: [
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHCZQBeRGc-zFHlh1d1lDJGP2fhkKeHnB7vhD8Q027Do6tLIxrqIJ5_aQoC2og35tmNIv1fibyHhkLWfK_rJ2G3jggEoQ1nA4LH9zzv58K-XlCmAhA-jXVyGZohMJrkv0fkNRFe_2JQ9Xr6zyrJ7vK444xqI80yq4f9YpqNESj7UDoyLAIlWFCPWCG0DFT8u_DmcYLTjI09gg-mUsE6BL28_UUiIS3FVxkIlNf4u1wTDd606n_zvQI6sAsjzZgsgYSs8tHFCidL30Y', title: 'Dawn Ridge', location: 'Patagonia', ratio: '4/3' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCp2yr2C8XuAxbvH-PWVHsPcLIssnbcwoD3zcJ3OltPE0_LDjY9LhkXygNObtqJDHc0g9pE5bcHfTZ2YSAiRurPIl7Wrt2IkV7-4WdcRUcCoIn4CEY_4pydfVzzMKQtvudZ9xfXjaw4JPmzh666OlEHupTUgUGfnlvk1DGWRgLj7l7rvqF8Hdi993t9D_YNfZwf-3Jx_7iiELc89tmAkVt0kvkIbqTmnqBO3743vhYgrojxv1E9rSlHzp98wI_q3ZmHWHxIK-u8WnyS', title: 'Blue Hour Peaks', location: 'Torres del Paine', ratio: '2/3' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBTSfuUb0y0kdBnkUAMJiMl3VT-5kAMcvok2wOxn-PfiG4izX2LfxiHBWJD-AN7gWAT7lyoQTh7E4F_JBznMq7GlYxxm_a_t8Dsr9i6OIMv5RZp_gZnap9VUPifMB1Eu8sxhZ7FI95TpBvdDjD9Oo4SAxymFPCQFyjN9kZEHJZtVm0wICI_uYFgtwmI5LlJ982E4PV6TPi6WPnc-bnpA6ZdO7o_tWLJ8PRh0X7Ua6fcwI-7I2PuK1ef7ncuwk46AZRVtRcBzThoKasS', title: 'Golden Hour Reflections', location: 'Lofoten Islands', ratio: '16/9' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCs9IZ_TnBNEccLqJIuG1ItxI9sS_9jUnrE6MyA6EM43gH36oI9geNLgsQ1CB6oAm78IeomNkZ1SjJWd72djSxjxRTCwT5unnpKe0uF5R1kOheK2dGvOF8a9UArPewDemJcvR4bfyCLwbClHmUT9s0rt5I_3azllK2FW2Kz9S_VDAPT4VU5NqCB_tA-qOjLhWzREwEbAfpkjyigRf0jq7laK9daIG1kABUdu1bQDz3vEQ_1eENUNk904yT-uUkq1ZuUAJSclDEVRYHc', title: 'Glacial Silence', location: 'Vatnajökull', ratio: '3/2' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZit_r1KpQJDY2XDEc-mRNCrxkE4LuR1rdPrRW5S3JOxoUI0VNmBLy5P3IfSWDcoHnNHvhkWtkGE28RV0CHA49Bf8q4crYt9NxrAcMnmKWHJZIqcJ8SUaHAnoi2UoaI9YUcb63kMJbcH8F63-cJWFX6OUipzTeZBPbOGLdYCKWUNEnAtq7a0hYI2f0z0EiM1sKaRWCVRdmCMXi4xxxby9ssmXjPukbIU266T9c42SFaExMGnEhdQ8JJRJQ3wvcywuyCFDNysUh35f-', title: 'Solitary Oak', location: 'Tuscany', ratio: '5/4' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_0fdLqC9vVpVocIR-cbV8vHfnyOV5YbNT9--ANce3XvxFGGXy06VSaQjEueHJCnG-D7iSFYIFiaGub2NlkLa1EayVuW0u0_K6Uz9rtuW-yhcbvt03psjROg9yPLvh0waqrLjp1YXDmOcELXafa7XFnU9SczVzytdl048kAS8jie1uYErk1ZqgxK1JGqAuhr4pByhhbkqHbh_gwROBTgqoocWO7TfDEPTS-T8kMkib619CDEhKFflfUR2iOop5Bw0y39sujMz2X4xL', title: 'Sculpted Canyon', location: 'Utah', ratio: '4/5' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDz-9hkqu8-8zsvyi3Jcnb59-_JG1bsFR8vsrrl0Ke2FlnpMqBc6EH_tKO1M4hmi6OGqt7thtm5Igg_8L9NOYgEQAPwBJdAMEswOi0q3ByADgM3qyEgP3SbMCZdh0Mxcrkg9JbSNN_EprQmwRA6SRXOfu5qm0O3PSQgwW_-WD8904X-_ovnCpICMHZhxAZMkqFY7syKiKiehjyPEOA-3vqkLSv7FArq9OrTmLzN5Wlc3lvUdBj0Jyl0W65jlL22a7LTRIMM-zqWawTr', title: 'Highland Mist', location: 'Iceland', ratio: '3/2' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6pUmrQNhfzksuSfYGf4UWkFNMuD8Aa18gacB2yrNxJ83EdbuMwDFJYDOvlGaZwN6b9Xn71aBD1EGbL5BjsLvVeM1EIvSDecgWyXWmR4oPbdlV-JKhEBx8yBHpWxiAZ8f6et796I8eFPvna5JmPETCw5k5XXCCNeyqt6izr2QAWmSujyQhylod9Q1glR8mPyXvBgj4_4C-f39hHrGhBCj1nVBYWqMtUTNdhOn3L-NAhTrO-U3jqHfu15PHe0GttIVVVA3HCLTRkI1g', title: 'Temperate Canopy', location: 'Vancouver Island', ratio: '3/4' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263520/untitled-2334_Large_iefide.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263427/DSC_5113_1_cqv58w.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262363/Duplicate_State_Large_nild4p.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262359/DSC_5811-1_Large_lmdmuv.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262352/DSC_4116-1_copy_copy_Large_noh1lp.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774253993/AUG_-_Mount_Cook._NZ_Large_npbwrn.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251357/BBW_Supp_Dotan_Beck_Castle_point_lighthouse_heugaz.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251053/untitled--3_dgk9ab.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251027/Mountain_road_cddgkl.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250997/Hidden_woners_hxlgqj.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250988/Red_tgmeeq.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250424/f0c0edcb-a3b6-4f7e-86d0-a0df5d5601de_davo0g.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250307/DOT_2876_ilx8mh.jpg', title: '', location: '' },
     ],
   },
   {
@@ -42,15 +72,42 @@ const categories = [
     label: 'Exploration 03',
     title: 'Intimate Landscape',
     subtitle: 'The beauty found in the smallest details',
-    cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDmYujfsV6FVq74P2MKIZ29-Ay_3znnPydU1i2F1upFjgfs9Y0dffcDqmUQ3Zouhr5H6rInA15uy5KBwsZPUsqZiMZniDhHInufFWRIaqMf2_1HHSBUMSSPLqUd81J3rDo6RytIeiRq89lpjF6YX-0_qR3a4IPOYL1oIdOok2INIV5RYC4-fqQKJRm-2Jyfwu8UD5XlRrz6tIZ9yVZhZ5bf5s_QKRVVBwn0eYbNO_W6VhzLbTZmTzccpWjsVtWXp-C-n_-sIzJOndb',
+    cover: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto/v1774251074/untitled-6992_fuwyho.jpg',
     description: 'Not all grandeur requires scale. These images explore the textures, patterns, and quiet moments hidden in plain sight.',
+    pinnedCount: 12,
     photos: [
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDmYujfsV6FVq74P2MKIZ29-Ay_3znnPydU1i2F1upFjgfs9Y0dffcDqmUQ3Zouhr5H6rInA15uy5KBwsZPUsqZiMZniDhHInufFWRIaqMf2_1HHSBUMSSPLqUd81J3rDo6RytIeiRq89lpjF6YX-0_qR3a4IPOYL1oIdOok2INIV5RYC4-fqQKJRm-2Jyfwu8UD5XlRrz6tIZ9yVZhZ5bf5s_QKRVVBwn0eYbNO_W6VhzLbTZmTzccpWjsVtWXp-C-n_-sIzJOndb', title: 'Forest Floor', location: 'Pacific Northwest', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBmn7-9-V_4FFua3w5Vvg8Y2q9pGjbAn-l-RUGLlEGy3KPITbW06vv8kO4V2EAsJmXU3YW9T_uxucVu2KhIS6EqT08TpIJF0ssPdb7YrcY2vW-zDretG3SG7ryyNL2NRq4r_FrLzBLjWDMgHMMRHUgxRQWtaVK07mgduxPj21wbB9dUVc7pzK8aqARqpkkoB-ZhC2cb88f7FpV6T6nW9FiG2J2-CoJkDMUYCzxw2vZugSfxzuWARXO0wjT5NvIkZdRs_YIc0iVPZA0i', title: 'Winter Wolf', location: 'Arctic Circle', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAOAfFPACpulOJHAhObt7DdmrwXXNbGBEcXB9B43icUA2PG6qzNAyYk3XC3ff1d_lPsui9fzgFnl42f__b3bQ3eyoL0oJTioNkT1SMchKmKdterOEJCNaPGx1J0LMYjeRvsM-_Aa0YKwb76yRSyn-5huS-tKq8nErP87o1a0vuLfbmYTGqC09eH-4VU1t2JKVE8Gk-WQvkIhkxFTd1_FSIgf9d0yTZYCu2zgWBbqd4-95vuWUJOYU2H2zdTJZpYPvzloGvQlkjkWAFW', title: 'Emerald Veil', location: 'Oregon', aspect: 'portrait' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDK16wqwJIj_EJvN05J1Of6Jn-VvY16eSneV-HVJTDB0_jWMRPkfHyKyU5wzfHasDWFJ8dtSIr5dr3xW48oEZa26wcOICt6EeTFD726H2lTTk-VtM466Bf7jj0igPmDB77zvyTwojQCZmnFJUZvPXBO4G1US7WpBQJefi-OkxgrVKvOgGs3NbDuYYjAFu63ufibujmZlt83B-u531o9f_lVv-Oobv-65obK85w2P8HGiOPzeYI3En_ebjsYJRSzQz7cZcXqlavVd1_F', title: 'Aerial Veins', location: 'Iceland', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuASzMg20QSluNYRohlzHUs7eKyJx-Y_zJPcwvB2r9V_mrc8X4FsD6CvfiRP0pQ6GORYE471bml1OH8uE45kGahDpn_mkIDzVDoxUlKNV-LFylVq8YHchzvFS-10olCgq-nTR30rAgJUqwslQ7LrKIzzVpGzLCW_cDMf5C6BgQD9RC-fomnAPg3VG4V1e-OhrgJH3JMqT7yi4XuG5E25pMWeo5OeTJ53kfC9990H_y_y-kpRBA1F9xEa9AWgGqGjLxXJVi3n8pBbrXZ1', title: 'Silken Flow', location: 'Columbia Gorge', aspect: 'portrait' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUjaqzpiCSr2f4VwkReApzYUaxoF0cQbPuon8HhwqCxBLrZNKS2c0tdWQ85OoybBGI-Z1G0R3t18-w9NDhRjkuQDr0w14pcCU25ddjJG2XQaFD-Dmuupn823DmBahxWhsVT29OFPYZyo0nXjMkhOLCfBGfSZLDxWuQET7dWbQL6CN_dXWd4PiARJKcKDyD2kMpNiuFfZ5i7YycfuKlZsalgMz_502WyOKurgcPrSDb-WPqqAuFTcaDTt8rv17vb0VWdNud9fMc3oFz', title: 'Misty Portrait', location: 'Svalbard', aspect: 'portrait' },
+      // Pinned top 9
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263513/DSC_9839sharp_Large_y4mpoz.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263510/DSC_9955-2_Large_icsquf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262373/DSC_2425-HDR-Edit-3_Large_dxl7rk.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251039/DSC_7054_nhcno9.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250932/Copy_of_untitled-3111_sgoxcl.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250267/DOT_7675_keofnf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263523/untitled-9611_Large_hsmcg0.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263932/DSC_6594-HDR-Edit_nratyh.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262383/DSC_6895_Large_hgosbk.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336475/DSC_9227-HDR_difffe.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336452/DSC_8841_uolaj5.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336380/DSC_0946-2_zfppl4.jpg', title: '', location: '' },
+      // Rest (shuffled by masonry)
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263590/ld-export-b4372cd9-09152022_ffdb4s.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263586/ld-export-7f3708ba-09152022_zy1rkh.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263530/untitled-5709_Large_n0xuxy.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263447/DSC_3466_mfpg4v.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262398/%D7%9C%D7%94%D7%93%D7%A4%D7%A1%D7%94_Large_lhsvto.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262394/untitled-0096-2_Large_ltpicf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262368/DSC_4315-HDR2_Large_qlxuug.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262365/untitled-3480_Large_uwuvt5.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774253995/%D7%9C%D7%94%D7%93%D7%A4%D7%A1%D7%94_Large_sg5zhn.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251075/DSC_1473_rwd30y.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251074/untitled-6992_fuwyho.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251042/DSC_3023_drlvg2.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250991/Sunrise_with_the_seals_ehkwwx.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250983/The_world_is_crying_euhdqx.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250980/Feathers_kqyqnj.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250891/untitled--6_zfxx70.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250314/DOT_2959-Pano_lcmlbg.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250288/DOT_1090_oplyuh.jpg', title: '', location: '' },
     ],
   },
   {
@@ -58,15 +115,41 @@ const categories = [
     label: 'Exploration 04',
     title: 'People in Nature',
     subtitle: 'The human figure dwarfed by the wild',
-    cover: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUjaqzpiCSr2f4VwkReApzYUaxoF0cQbPuon8HhwqCxBLrZNKS2c0tdWQ85OoybBGI-Z1G0R3t18-w9NDhRjkuQDr0w14pcCU25ddjJG2XQaFD-Dmuupn823DmBahxWhsVT29OFPYZyo0nXjMkhOLCfBGfSZLDxWuQET7dWbQL6CN_dXWd4PiARJKcKDyD2kMpNiuFfZ5i7YycfuKlZsalgMz_502WyOKurgcPrSDb-WPqqAuFTcaDTt8rv17vb0VWdNud9fMc3oFz',
+    cover: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto/v1774336393/DSC_8996_x8hcof.jpg',
     description: 'Solitary figures against vast landscapes — a reminder of our place in the natural order. These images capture the quiet confrontation between human scale and wilderness.',
     photos: [
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUjaqzpiCSr2f4VwkReApzYUaxoF0cQbPuon8HhwqCxBLrZNKS2c0tdWQ85OoybBGI-Z1G0R3t18-w9NDhRjkuQDr0w14pcCU25ddjJG2XQaFD-Dmuupn823DmBahxWhsVT29OFPYZyo0nXjMkhOLCfBGfSZLDxWuQET7dWbQL6CN_dXWd4PiARJKcKDyD2kMpNiuFfZ5i7YycfuKlZsalgMz_502WyOKurgcPrSDb-WPqqAuFTcaDTt8rv17vb0VWdNud9fMc3oFz', title: 'Solitary Observer', location: 'Svalbard', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDz-9hkqu8-8zsvyi3Jcnb59-_JG1bsFR8vsrrl0Ke2FlnpMqBc6EH_tKO1M4hmi6OGqt7thtm5Igg_8L9NOYgEQAPwBJdAMEswOi0q3ByADgM3qyEgP3SbMCZdh0Mxcrkg9JbSNN_EprQmwRA6SRXOfu5qm0O3PSQgwW_-WD8904X-_ovnCpICMHZhxAZMkqFY7syKiKiehjyPEOA-3vqkLSv7FArq9OrTmLzN5Wlc3lvUdBj0Jyl0W65jlL22a7LTRIMM-zqWawTr', title: 'Highland Walker', location: 'Iceland Highlands', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB7nwtAO8uszQ0KlA6zXwyKWs14WZxu4JR572gIhHvsLMUfKc_ZdnGter-T9fB2G6O9uzaFfuz6WHAEl_qqEcoWmQhYDRxQ3qQhdyqImXJobgzvv8JHC5uO8_07Z6Z6s1jZTQz-IRYPNopQNZxkUOx6DriupAwcY0aN-WadHBHD77W5PZ2zFAjglmS0mW7vSE7hy-12Ujmt1k0lC1IM-rXfJifJvAr-6Qynamymy-_iKJgt8EZrF_ffNV8WIoj88gX3rBO_dgZqisRc', title: 'Forest Cathedral', location: 'Redwoods, California', aspect: 'portrait' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCs9IZ_TnBNEccLqJIuG1ItxI9sS_9jUnrE6MyA6EM43gH36oI9geNLgsQ1CB6oAm78IeomNkZ1SjJWd72djSxjxRTCwT5unnpKe0uF5R1kOheK2dGvOF8a9UArPewDemJcvR4bfyCLwbClHmUT9s0rt5I_3azllK2FW2Kz9S_VDAPT4VU5NqCB_tA-qOjLhWzREwEbAfpkjyigRf0jq7laK9daIG1kABUdu1bQDz3vEQ_1eENUNk904yT-uUkq1ZuUAJSclDEVRYHc', title: 'Glacier Crossing', location: 'Vatnajökull', aspect: 'landscape' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRkulzW0wwNNlHsOltXRbOo-emt4NZJgBWqo78JgVsnjZw6siVH0AjsFX0kQLBSUrhZTfa6Q0vded2PQPOGlYCXvEgf9M6mjm3GRJscoXEmyBiGf_AoYBBWjXCILLqPKpqXjrLsEgdiZOwwKqSqUwS6OMEgSmsoonjh-6Fq_XJyE9fHRSR5hlguNBeAYiJjBjkFX_hHYbyZ2DNAXJ1qutYrArinboDrTZUcAIJwtq94GlO3CuVSZ1qg06NrraXtwdUdntaarWRFES8', title: 'Dawn Silhouette', location: 'Iceland', aspect: 'portrait' },
-      { src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSPXtyLCFyprxcqZ5Wb-AOhVDivgqwywKRm5-fWYDFiW6isYVdZkELioTwdbw1Xwh8OY6zvStPZXrcryGogM4B401o1JiWlAUBNXRtd5JbBIKtHBNv8h7lNZWNPqWsWjZSX_K_zOZ_QM7x7kQmjfZlUTudBbm5eS-SSUPY2WSULRwRUlVGjm4DblLptsAeX2EBqHt2JXWhADtCgd-UDc6dP3z94-4veplFMjYjavkym-YMhg4XnCZTSB5D1t_fJKCNnSwmGrKOGDnt', title: 'Into the Mist', location: 'Olympic Peninsula', aspect: 'landscape' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774332839/%D7%9C%D7%91%D7%93_%D7%9E%D7%95%D7%9B%D7%9F_%D7%90%D7%99%D7%A0%D7%A1%D7%98%D7%92%D7%A8%D7%9D_Large_d9uve1.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774332835/nomoon_Large_ldfsmv.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774332831/untitled-7400_Large_tatjak.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774332826/6_Large_dfwpqw.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263920/IMG_8470_paasbc.png', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263613/ready_with_logo2_Large_nvufrg.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263611/ready_2_Large_s5smug.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263556/750_1897_Large_wtccu9.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774263547/750_5365_gbfiua.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262391/untitled-6215_Large_uckqko.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262378/IMG_0640_Large_n1ic8d.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262370/DSC_8353_Large_u0c5wj.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262342/750_3428_Large_j2db3e.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774262337/750_0242_Large_bcklql.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251093/untitled-22020_yilux7.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251021/IMG_2705_ystucf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774251012/On_top_of_the_world_joaivw.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250420/DOT_4177_g9onsk.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250363/750_1362_ktktas.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250256/750_3468_cldhi5.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250237/%D7%9E%D7%AA%D7%A0%D7%93%D7%A0%D7%93%D7%99%D7%9D_%D7%91%D7%A8%D7%95%D7%97_-_%D7%93%D7%95%D7%AA%D7%9F_%D7%91%D7%A7_ij5fqn.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774250237/%D7%9B%D7%9C%D7%95%D7%90%D7%99%D7%9D_%D7%91%D7%AA%D7%95%D7%9A_%D7%A2%D7%A6%D7%9E%D7%A0%D7%95_-_%D7%93%D7%95%D7%AA%D7%9F_%D7%91%D7%A7_mcy6bq.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336393/DSC_8996_x8hcof.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336387/DSC_8396_qytt2z.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336375/DSC_9218_bsz1mf.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336368/DSC_9186-Edit_-_closeup_2_tpcvdf.png', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336362/baa4996e-1791-4382-b2a8-57bf238ae23f_nlndhl.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336356/fcd76f73-54aa-42d3-af29-ff5eee9ced21_uwv15q.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336349/b5fe9989-dc7f-49bd-a7ba-693cb2c509c5_aiscw0.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336343/4539897b-7cf0-4890-9d8c-e9c8be638c6b_hnigir.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336336/1bb5afc9-8a1c-4b19-81ae-ed61bef73b4d_d5exu0.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774336331/3e37a3e3-e25d-4144-bada-0e5581be632f_ubbwrh.jpg', title: '', location: '' },
     ],
   },
 ];
@@ -141,26 +224,10 @@ function CategoryOverview({ onSelectCategory }) {
           </div>
         </ScrollReveal>
 
-        {/* Landscape — tall */}
+        {/* Intimate — tall */}
         <ScrollReveal className="md:col-span-4" delay={0.1}>
           <div
             className="group relative overflow-hidden cursor-pointer aspect-square md:aspect-auto md:h-[700px]"
-            onClick={() => onSelectCategory('landscape')}
-          >
-            <img className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Mountain vista" src={categories[1].cover} />
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-transparent to-transparent opacity-60" />
-            <div className="absolute bottom-10 left-10 transition-transform duration-500 group-hover:-translate-y-2">
-              <span className="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 02</span>
-              <h2 className="font-headline text-4xl text-on-surface">Landscape</h2>
-              <p className="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">The grand architecture of the natural world</p>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Intimate — medium */}
-        <ScrollReveal className="md:col-span-7" delay={0.15}>
-          <div
-            className="group relative overflow-hidden cursor-pointer aspect-video md:aspect-auto md:h-[500px]"
             onClick={() => onSelectCategory('intimate')}
           >
             <img className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Forest floor" src={categories[2].cover} />
@@ -169,6 +236,22 @@ function CategoryOverview({ onSelectCategory }) {
               <span className="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 03</span>
               <h2 className="font-headline text-4xl text-on-surface">Intimate Landscape</h2>
               <p className="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">The beauty found in the smallest details</p>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Landscape — wide */}
+        <ScrollReveal className="md:col-span-7" delay={0.15}>
+          <div
+            className="group relative overflow-hidden cursor-pointer aspect-video md:aspect-auto md:h-[500px]"
+            onClick={() => onSelectCategory('landscape')}
+          >
+            <img className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Mountain vista" src={categories[1].cover} />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-transparent to-transparent opacity-60" />
+            <div className="absolute bottom-10 left-10 transition-transform duration-500 group-hover:-translate-y-2">
+              <span className="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 02</span>
+              <h2 className="font-headline text-4xl text-on-surface">Landscape</h2>
+              <p className="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">The grand architecture of the natural world</p>
             </div>
           </div>
         </ScrollReveal>
@@ -193,6 +276,123 @@ function CategoryOverview({ onSelectCategory }) {
   );
 }
 
+/* ─── Seeded shuffle (deterministic per category so layout doesn't jump on re-render) ─── */
+function seededShuffle(arr, seed) {
+  const a = [...arr];
+  let s = seed;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = (s * 9301 + 49297) % 233280;
+    const j = Math.floor((s / 233280) * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ─── Masonry Gallery: JS-based shortest-column-first so order reads left→right, top→bottom ─── */
+function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedCount = 3 }) {
+  const gridPhotos = photos.slice(startIndex);
+  const [colCount, setColCount] = useState(3);
+  const [dimensions, setDimensions] = useState(null); // array of { w, h } per photo
+
+  // Responsive column count
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setColCount(w <= 480 ? 1 : w <= 768 ? 2 : 3);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // Load image dimensions
+  useEffect(() => {
+    if (gridPhotos.length === 0) { setDimensions([]); return; }
+    const results = new Array(gridPhotos.length).fill(null);
+    let loaded = 0;
+    gridPhotos.forEach((photo, i) => {
+      const img = new Image();
+      img.onload = () => {
+        results[i] = { w: img.width, h: img.height };
+        loaded++;
+        if (loaded === gridPhotos.length) setDimensions([...results]);
+      };
+      img.onerror = () => {
+        results[i] = { w: 4, h: 3 };
+        loaded++;
+        if (loaded === gridPhotos.length) setDimensions([...results]);
+      };
+      img.src = photo.src;
+    });
+  }, [gridPhotos.length, startIndex]);
+
+  // Build display order: pinned first, then shuffled rest
+  const displayOrder = React.useMemo(() => {
+    const pinned = Math.min(pinnedCount, gridPhotos.length);
+    if (gridPhotos.length <= pinned) return gridPhotos.map((_, i) => i);
+    const first = Array.from({ length: pinned }, (_, i) => i);
+    const rest = gridPhotos.slice(pinned).map((_, i) => i + pinned);
+    const shuffledRest = seededShuffle(rest, gridPhotos.length * 7 + startIndex);
+    return [...first, ...shuffledRest];
+  }, [gridPhotos.length, startIndex, pinnedCount]);
+
+  if (!dimensions) return null;
+
+  // Distribute into columns using shortest-column-first (reads top→bottom, left→right)
+  // Use a proportional gap relative to aspect ratios (10px gap ≈ 0.01 of typical column width)
+  const gapUnit = 0.01;
+  const columns = Array.from({ length: colCount }, () => ({ items: [], height: 0 }));
+
+  displayOrder.forEach((photoIdx) => {
+    const dim = dimensions[photoIdx] || { w: 4, h: 3 };
+    const ratio = dim.h / dim.w;
+    // Find the shortest column
+    let shortest = 0;
+    for (let c = 1; c < colCount; c++) {
+      if (columns[c].height < columns[shortest].height) shortest = c;
+    }
+    columns[shortest].items.push(photoIdx);
+    columns[shortest].height += ratio + gapUnit;
+  });
+
+  return (
+    <section className={`${hasFeatured ? '' : 'mt-16'} mb-32`}>
+      <style>{`
+        @keyframes gridReveal {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div className="flex gap-[10px]">
+        {columns.map((col, colIdx) => (
+          <div key={colIdx} className="flex-1 flex flex-col gap-[10px]">
+            {col.items.map((localIdx, itemIdx) => {
+              const actualIdx = startIndex + localIdx;
+              const photo = gridPhotos[localIdx];
+              const animDelay = (colIdx + itemIdx * colCount) * 0.04;
+              return (
+                <div
+                  key={actualIdx}
+                  className="overflow-hidden cursor-pointer group relative"
+                  style={{ animation: `gridReveal 0.5s ${animDelay}s both` }}
+                  onClick={() => onPhotoClick(actualIdx)}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.title || ''}
+                    className="w-full block group-hover:scale-[1.03] transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Category Detail Page ─── */
 function CategoryDetail({ category, allCategories, onBack, onSelectCategory, onPhotoClick }) {
   return (
@@ -212,7 +412,7 @@ function CategoryDetail({ category, allCategories, onBack, onSelectCategory, onP
         {/* Back button */}
         <button
           onClick={onBack}
-          className="absolute top-6 left-8 md:left-16 flex items-center gap-2 text-on-surface-variant/60 hover:text-primary transition-colors group"
+          className="absolute top-6 left-8 md:left-16 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white/90 hover:bg-black/70 hover:text-white px-4 py-2 rounded-full transition-all group"
         >
           <span className="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
           <span className="font-label text-xs uppercase tracking-widest">All Categories</span>
@@ -247,30 +447,32 @@ function CategoryDetail({ category, allCategories, onBack, onSelectCategory, onP
         </div>
       </div>
 
-      {/* Masonry photo grid — each photo uses its own aspect ratio */}
-      <section className="mt-16 mb-32">
-        <div className="columns-2 md:columns-3 gap-4 md:gap-6">
-          {category.photos.map((photo, i) => (
-            <div
-              key={i}
-              className="break-inside-avoid mb-4 md:mb-6 group relative overflow-hidden cursor-pointer"
-              style={{ animation: `gridReveal 0.5s ${i * 0.06}s both` }}
-              onClick={() => onPhotoClick(i)}
-            >
-              <img
-                src={photo.src}
-                alt={photo.title}
-                className="w-full group-hover:scale-[1.03] transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-              <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-400 translate-y-2 group-hover:translate-y-0">
-                <h4 className="font-headline text-base text-white">{photo.title}</h4>
-                <p className="font-label text-[10px] text-white/50 mt-0.5">{photo.location}</p>
+      {/* Featured section — triptych + full-width hero if category has it */}
+      {category.featured && (
+        <section className="mt-16">
+          {/* Triptych row */}
+          <div className="flex gap-2 md:gap-3 mb-2 md:mb-3" style={{ animation: 'gridReveal 0.6s 0s both' }}>
+            {category.featured.triptych.map((src, i) => (
+              <div key={i} className="flex-1 overflow-hidden cursor-pointer group" onClick={() => onPhotoClick(i)}>
+                <img src={src} alt="" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+          {/* Full-width hero */}
+          <div className="overflow-hidden mb-2 md:mb-3 cursor-pointer group" style={{ animation: 'gridReveal 0.6s 0.15s both' }} onClick={() => onPhotoClick(3)}>
+            <img src={category.featured.hero} alt="" className="w-full group-hover:scale-[1.02] transition-transform duration-700" />
+          </div>
+        </section>
+      )}
+
+      {/* Masonry gallery — natural aspect ratios, no cropping, shuffled order */}
+      <MasonryGallery
+        photos={category.photos}
+        startIndex={category.featuredCount || 0}
+        onPhotoClick={onPhotoClick}
+        hasFeatured={!!category.featured}
+        pinnedCount={category.pinnedCount || 3}
+      />
     </>
   );
 }

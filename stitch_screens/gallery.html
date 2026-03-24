@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&amp;family=Manrope:wght@200;300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed-variant": "#5c4305",
+              "on-primary": "#233429",
+              "tertiary-fixed-dim": "#e7c17a",
+              "surface-container-highest": "#323533",
+              "on-secondary-fixed-variant": "#514438",
+              "on-error-container": "#ffdad6",
+              "on-background": "#e1e3df",
+              "outline-variant": "#434844",
+              "on-primary-fixed": "#0e1f15",
+              "tertiary-fixed": "#ffdea3",
+              "on-primary-container": "#96a99b",
+              "primary-fixed": "#d4e7d8",
+              "on-tertiary": "#402d00",
+              "on-primary-fixed-variant": "#394b3f",
+              "on-secondary-fixed": "#241a0f",
+              "surface-dim": "#111412",
+              "tertiary": "#e7c17a",
+              "outline": "#8d928d",
+              "primary-container": "#2d3e33",
+              "on-tertiary-container": "#c19f5c",
+              "on-secondary": "#3a2e23",
+              "surface-tint": "#b8cbbc",
+              "secondary-fixed": "#f3dfce",
+              "secondary-container": "#54473a",
+              "inverse-primary": "#516356",
+              "background": "#111412",
+              "error-container": "#93000a",
+              "on-surface-variant": "#c3c8c2",
+              "surface-container-low": "#191c1a",
+              "surface-container-high": "#282b29",
+              "on-tertiary-fixed": "#261900",
+              "primary-fixed-dim": "#b8cbbc",
+              "secondary-fixed-dim": "#d6c3b3",
+              "surface-container": "#1d201e",
+              "error": "#ffb4ab",
+              "surface-variant": "#323533",
+              "surface-container-lowest": "#0c0f0d",
+              "surface": "#111412",
+              "primary": "#b8cbbc",
+              "on-surface": "#e1e3df",
+              "surface-bright": "#373a38",
+              "inverse-surface": "#e1e3df",
+              "on-error": "#690005",
+              "on-secondary-container": "#c8b5a5",
+              "secondary": "#d6c3b3",
+              "inverse-on-surface": "#2e312f",
+              "tertiary-container": "#4c3600"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-tertiary/30">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#111412]/60 backdrop-blur-2xl flex justify-between items-center px-8 py-6 w-full max-w-none font-['Noto_Serif'] font-light tracking-wide bg-gradient-to-b from-[#111412]/80 to-transparent">
+<div class="text-2xl font-serif italic text-[#b8cbbc] tracking-tighter">
+            The Digital Gallery
+        </div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="text-[#e7c17a] border-b border-[#e7c17a] pb-1 hover:opacity-80 transition-opacity" href="#">Gallery</a>
+<a class="text-[#c3c8c2] hover:text-[#b8cbbc] transition-colors hover:opacity-80" href="#">Workshops</a>
+<a class="text-[#c3c8c2] hover:text-[#b8cbbc] transition-colors hover:opacity-80" href="#">YouTube</a>
+<a class="text-[#c3c8c2] hover:text-[#b8cbbc] transition-colors hover:opacity-80" href="#">Courses</a>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#b8cbbc] text-2xl cursor-pointer hover:opacity-80 transition-opacity" data-icon="account_circle">account_circle</span>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 px-8 md:px-16 lg:px-24 min-h-screen">
+<!-- Editorial Header Section -->
+<header class="mb-24 max-w-4xl">
+<div class="flex flex-col gap-4">
+<span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] mb-2">Portfolio Categories</span>
+<h1 class="font-headline text-5xl md:text-7xl text-on-surface leading-tight tracking-tight">
+                    Immersion into <br/> <span class="italic font-light text-primary">the Wild</span>
+</h1>
+<p class="font-body text-on-surface-variant text-lg max-w-2xl mt-6 leading-relaxed">
+                    A curated selection of natural landscapes and inhabitants. Each category represents years of patience, trekking, and the pursuit of perfect light.
+                </p>
+</div>
+</header>
+<!-- Bento Inspired Category Grid -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-32">
+<!-- Forests - Large vertical focus -->
+<div class="md:col-span-8 group relative overflow-hidden cursor-pointer aspect-[4/5] md:aspect-auto md:h-[700px]">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="Starry night sky over a silent wilderness" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjWtSKwi6oZirogpm-7Mi5-8PYolEDWIbzNZ6SLFWqTfKv8xyvhy5nMh6w6GPoBRJlb-eb38TEnsMWT7TUYz6d5zOiFAV82jYqSHjdB9ZdGtJ5mrB05EBSgGiKMuwH1b9IkUhh6IJi8OXRACNe-_FF2BKtpO-MKEEatiJpAGnzbHXe91SPHXW0PHcGmkFL1no48ysH-OcijZ_VWkQ6Rvw6AbIEFbJOy9hkm7vEik-Q-J4my-djwG-6U7vieGkSh-KK_BwUlfCoGdj3"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-10 left-10 transition-transform duration-500 group-hover:-translate-y-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 01</span>
+<h2 class="font-headline text-4xl text-on-surface">Night</h2>
+<p class="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">Stars, silence, and the celestial dance</p>
+</div>
+</div>
+<!-- Mountains - Medium block -->
+<div class="md:col-span-4 group relative overflow-hidden cursor-pointer aspect-square md:aspect-auto">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="Wide mountain vista at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHCZQBeRGc-zFHlh1d1lDJGP2fhkKeHnB7vhD8Q027Do6tLIxrqIJ5_aQoC2og35tmNIv1fibyHhkLWfK_rJ2G3jggEoQ1nA4LH9zzv58K-XlCmAhA-jXVyGZohMJrkv0fkNRFe_2JQ9Xr6zyrJ7vK444xqI80yq4f9YpqNESj7UDoyLAIlWFCPWCG0DFT8u_DmcYLTjI09gg-mUsE6BL28_UUiIS3FVxkIlNf4u1wTDd606n_zvQI6sAsjzZgsgYSs8tHFCidL30Y"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-10 left-10 transition-transform duration-500 group-hover:-translate-y-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 02</span>
+<h2 class="font-headline text-4xl text-on-surface">Landscape</h2>
+<p class="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">The grand architecture of the natural world</p>
+</div>
+</div>
+<!-- Wildlife - Spanning width below -->
+<div class="md:col-span-12 group relative overflow-hidden cursor-pointer aspect-video md:aspect-auto md:h-[500px]">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="Detailed texture of a forest floor with moss and leaves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDmYujfsV6FVq74P2MKIZ29-Ay_3znnPydU1i2F1upFjgfs9Y0dffcDqmUQ3Zouhr5H6rInA15uy5KBwsZPUsqZiMZniDhHInufFWRIaqMf2_1HHSBUMSSPLqUd81J3rDo6RytIeiRq89lpjF6YX-0_qR3a4IPOYL1oIdOok2INIV5RYC4-fqQKJRm-2Jyfwu8UD5XlRrz6tIZ9yVZhZ5bf5s_QKRVVBwn0eYbNO_W6VhzLbTZmTzccpWjsVtWXp-C-n_-sIzJOndb"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-10 left-10 transition-transform duration-500 group-hover:-translate-y-2">
+<span class="text-tertiary font-label text-[10px] uppercase tracking-[0.3em] block mb-2">Exploration 03</span>
+<h2 class="font-headline text-4xl text-on-surface">Intimate Landscape</h2>
+<p class="text-on-surface-variant font-label text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">The beauty found in the smallest details</p>
+</div>
+</div>
+<!-- Seascapes - Horizontal focus -->
+</section>
+<!-- Call to Action Section with Tonal Layering -->
+<section class="mb-32 p-16 md:p-24 bg-surface-container-low flex flex-col items-center text-center">
+<span class="text-primary font-label text-xs uppercase tracking-[0.5em] mb-6">Experience the Archive</span>
+<h3 class="font-headline text-3xl md:text-5xl text-on-surface mb-10 max-w-3xl leading-snug">
+                Join our next expedition or bring the wilderness into your home.
+            </h3>
+<div class="flex flex-col md:flex-row gap-6">
+<button class="bg-primary text-on-primary px-10 py-4 font-label text-sm uppercase tracking-widest hover:bg-[#a5b8a9] transition-colors rounded-none">
+                    View Full Archive
+                </button>
+<button class="border border-outline-variant/20 text-primary px-10 py-4 font-label text-sm uppercase tracking-widest hover:bg-surface-container-highest transition-colors rounded-none">
+                    Print Shop
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 mt-24 border-t border-[#323533]/15 bg-[#111412]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<p class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#c3c8c2]">© 2024 The Curated Wilderness. All rights reserved.</p>
+</div>
+<div class="flex space-x-10">
+<a class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#c3c8c2] hover:text-[#e7c17a] transition-colors duration-500" href="#">Journal</a>
+<a class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#c3c8c2] hover:text-[#e7c17a] transition-colors duration-500" href="#">Contact</a>
+<a class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#c3c8c2] hover:text-[#e7c17a] transition-colors duration-500" href="#">Terms</a>
+<a class="font-['Manrope'] text-xs uppercase tracking-[0.2em] text-[#c3c8c2] hover:text-[#e7c17a] transition-colors duration-500" href="#">Privacy</a>
+</div>
+</div>
+</footer>
+</body></html>
