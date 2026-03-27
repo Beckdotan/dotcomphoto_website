@@ -1,6 +1,77 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+
+/* ─── Preload first N images of every category when gallery overview mounts ─── */
+const PRELOAD_PER_CATEGORY = 6;
+const preloadCache = new Set();
+
+function preloadCategoryImages() {
+  categories.forEach((cat) => {
+    const start = cat.featuredCount || 0;
+    const photos = cat.photos.slice(start, start + PRELOAD_PER_CATEGORY);
+    // Also preload the cover
+    if (cat.cover && !preloadCache.has(cat.cover)) {
+      preloadCache.add(cat.cover);
+      const img = new Image();
+      img.src = cat.cover;
+    }
+    photos.forEach((photo) => {
+      if (!preloadCache.has(photo.src)) {
+        preloadCache.add(photo.src);
+        const img = new Image();
+        img.src = photo.src;
+      }
+    });
+  });
+}
+
+/* ─── Lazy image with blur-up: shows tiny placeholder, swaps to full on load ─── */
+function LazyImage({ src, alt, className, eager }) {
+  const [loaded, setLoaded] = useState(false);
+  const [inView, setInView] = useState(eager || false);
+  const ref = useRef(null);
+
+  // Tiny blur placeholder URL (Cloudinary transform)
+  const placeholder = src.replace('/upload/', '/upload/w_40,q_10,e_blur:400/');
+
+  useEffect(() => {
+    if (eager || inView) return;
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.disconnect(); } },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [eager, inView]);
+
+  return (
+    <div ref={ref} className="relative overflow-hidden">
+      {/* Blur placeholder — always rendered for layout */}
+      <img
+        src={placeholder}
+        alt=""
+        aria-hidden="true"
+        className={`${className} ${loaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 absolute inset-0`}
+      />
+      {/* Full image — only start loading when in view */}
+      {inView && (
+        <img
+          src={src}
+          alt={alt}
+          className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+          onLoad={() => setLoaded(true)}
+        />
+      )}
+      {/* Invisible spacer to maintain aspect ratio before full image loads */}
+      {!loaded && !inView && (
+        <img src={placeholder} alt="" className={`${className} invisible`} />
+      )}
+    </div>
+  );
+}
 
 const categories = [
   {
@@ -213,6 +284,9 @@ function Lightbox({ photo, onClose, onPrev, onNext }) {
 
 /* ─── Category Overview (bento grid) ─── */
 function CategoryOverview({ onSelectCategory }) {
+  // Preload first images of all categories when overview mounts
+  useEffect(() => { preloadCategoryImages(); }, []);
+
   return (
     <>
       <ScrollReveal>
@@ -308,11 +382,13 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
-/* ─── Masonry Gallery: JS-based shortest-column-first so order reads left→right, top→bottom ─── */
+/* ─── Masonry Gallery: JS-based shortest-column-first, progressive loading ─── */
+const EAGER_COUNT = 9; // first 9 images load eagerly (above fold)
+
 function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedCount = 3 }) {
   const gridPhotos = photos.slice(startIndex);
   const [colCount, setColCount] = useState(3);
-  const [dimensions, setDimensions] = useState(null); // array of { w, h } per photo
+  const [dimensions, setDimensions] = useState(null);
 
   // Responsive column count
   useEffect(() => {
@@ -325,13 +401,14 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Load image dimensions
+  // Load dimensions from tiny placeholders (w_40 = ~1-2KB each, loads in ms)
   useEffect(() => {
     if (gridPhotos.length === 0) { setDimensions([]); return; }
     const results = new Array(gridPhotos.length).fill(null);
     let loaded = 0;
     gridPhotos.forEach((photo, i) => {
       const img = new Image();
+      const tinyUrl = photo.src.replace('/upload/', '/upload/w_40,q_1/');
       img.onload = () => {
         results[i] = { w: img.width, h: img.height };
         loaded++;
@@ -342,9 +419,9 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
         loaded++;
         if (loaded === gridPhotos.length) setDimensions([...results]);
       };
-      img.src = photo.src;
+      img.src = tinyUrl;
     });
-  }, [gridPhotos.length, startIndex]);
+  }, [gridPhotos.length, startIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Build display order: pinned first, then shuffled rest
   const displayOrder = React.useMemo(() => {
@@ -354,19 +431,17 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
     const rest = gridPhotos.slice(pinned).map((_, i) => i + pinned);
     const shuffledRest = seededShuffle(rest, gridPhotos.length * 7 + startIndex);
     return [...first, ...shuffledRest];
-  }, [gridPhotos.length, startIndex, pinnedCount]);
+  }, [gridPhotos.length, startIndex, pinnedCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!dimensions) return null;
 
-  // Distribute into columns using shortest-column-first (reads top→bottom, left→right)
-  // Use a proportional gap relative to aspect ratios (10px gap ≈ 0.01 of typical column width)
+  // Distribute into columns using shortest-column-first
   const gapUnit = 0.01;
   const columns = Array.from({ length: colCount }, () => ({ items: [], height: 0 }));
 
   displayOrder.forEach((photoIdx) => {
     const dim = dimensions[photoIdx] || { w: 4, h: 3 };
     const ratio = dim.h / dim.w;
-    // Find the shortest column
     let shortest = 0;
     for (let c = 1; c < colCount; c++) {
       if (columns[c].height < columns[shortest].height) shortest = c;
@@ -374,6 +449,16 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
     columns[shortest].items.push(photoIdx);
     columns[shortest].height += ratio + gapUnit;
   });
+
+  // Track which display indices are eager (above fold)
+  let globalIdx = 0;
+  const eagerSet = new Set();
+  for (const col of columns) {
+    for (const localIdx of col.items) {
+      if (globalIdx < EAGER_COUNT) eagerSet.add(localIdx);
+      globalIdx++;
+    }
+  }
 
   return (
     <section className={`${hasFeatured ? '' : 'mt-16'} mb-32`}>
@@ -390,17 +475,19 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
               const actualIdx = startIndex + localIdx;
               const photo = gridPhotos[localIdx];
               const animDelay = (colIdx + itemIdx * colCount) * 0.04;
+              const isEager = eagerSet.has(localIdx);
               return (
                 <div
                   key={actualIdx}
-                  className="overflow-hidden cursor-pointer group relative"
+                  className="cursor-pointer group relative"
                   style={{ animation: `gridReveal 0.5s ${animDelay}s both` }}
                   onClick={() => onPhotoClick(actualIdx)}
                 >
-                  <img
+                  <LazyImage
                     src={photo.src}
                     alt={photo.title || ''}
                     className="w-full block group-hover:scale-[1.03] transition-transform duration-700"
+                    eager={isEager}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                 </div>

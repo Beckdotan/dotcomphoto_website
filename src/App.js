@@ -94,12 +94,14 @@ export default function App() {
       {/* Film grain texture */}
       <FilmGrain />
 
-      {/* Background Switcher */}
-      <BackgroundSwitcher
-        videos={videos}
-        activeVideo={activeVideo}
-        onSwitch={handleBgSwitch}
-      />
+      {/* Background Switcher — only on home */}
+      {activePage === 'home' && (
+        <BackgroundSwitcher
+          videos={videos}
+          activeVideo={activeVideo}
+          onSwitch={handleBgSwitch}
+        />
+      )}
     </>
   );
 }
