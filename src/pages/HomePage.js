@@ -170,61 +170,49 @@ function GlassTransition() {
   );
 }
 
-/* ─── Asymmetric bento gallery with scroll reveals ─── */
-function BentoGallery() {
+/* ─── Behind the Scenes — the photographer in the field ─── */
+function BehindTheScenes() {
   return (
     <section className="px-8 md:px-24 py-32 bg-background">
-      <ScrollReveal className="mb-16">
-        <span className="font-label text-tertiary text-[10px] tracking-[0.4em] uppercase mb-3 block">Selected Work</span>
-        <h2 className="font-headline text-4xl md:text-5xl text-on-surface font-light">From the Archive</h2>
+      <ScrollReveal className="mb-16 max-w-3xl">
+        <span className="font-label text-tertiary text-[10px] tracking-[0.4em] uppercase mb-3 block">Behind the Lens</span>
+        <h2 className="font-headline text-4xl md:text-5xl text-on-surface font-light">Where the Work Happens</h2>
+        <p className="font-body text-on-surface-variant text-lg mt-4 leading-relaxed">
+          Early mornings, remote ridgelines, and the patience to wait for the perfect light.
+        </p>
       </ScrollReveal>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
-        {/* Large Featured */}
-        <ScrollReveal className="md:col-span-8 group cursor-crosshair" delay={0}>
-          <div className="overflow-hidden bg-surface-container-low relative">
+        {/* Hero — epic mountaintop panorama */}
+        <ScrollReveal className="md:col-span-12 group" delay={0}>
+          <div className="overflow-hidden relative">
             <img
-              alt="Selected work"
-              className="w-full group-hover:scale-[1.03] transition-transform duration-1000"
-              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_1200,q_auto,f_auto/v1774243315/f0c0edcb-a3b6-4f7e-86d0-a0df5d5601de_a7kevp.jpg"
-            />
-            {/* Hover overlay with metadata */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-2 group-hover:translate-y-0">
-              <div>
-                <h3 className="font-headline text-2xl text-white">The Solitude of Winter</h3>
-                <p className="font-label text-xs text-white/60 mt-1">Arctic Circle, 2023</p>
-              </div>
-              <div className="flex gap-4 font-label text-[10px] text-white/50">
-                <span>ISO 400</span>
-                <span className="text-tertiary">400MM</span>
-                <span>F/2.8</span>
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Second image */}
-        <ScrollReveal className="md:col-span-4 md:mt-32 group" delay={0.15}>
-          <div className="overflow-hidden bg-surface-container-low relative">
-            <img
-              alt="Selected work"
-              className="w-full group-hover:scale-[1.05] transition-transform duration-1000"
-              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774243316/e5b556d2-01d5-44ff-bb01-355346835813_k5kecl.jpg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-        </ScrollReveal>
-
-        {/* Third image */}
-        <ScrollReveal className="md:col-span-12 mt-4 group" delay={0.1}>
-          <div className="overflow-hidden bg-surface-container-low relative">
-            <img
-              alt="Selected work"
+              alt="Photographer with tripod on a mountaintop overlooking lakes and ranges"
               className="w-full group-hover:scale-[1.02] transition-transform duration-1000"
-              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_1200,q_auto,f_auto/v1774242908/e34be070-3626-4b63-a10e-222a8dff8a7d_dcynen.jpg"
+              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_1400,q_auto,f_auto,g_north,c_fill,ar_21:9/v1774524793/untitled-6627_skvoi5.jpg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </div>
+        </ScrollReveal>
+
+        {/* Volcano reflection — vertical */}
+        <ScrollReveal className="md:col-span-5 group" delay={0.1}>
+          <div className="overflow-hidden relative">
+            <img
+              alt="Camera on tripod with volcano reflection in still water"
+              className="w-full group-hover:scale-[1.03] transition-transform duration-1000"
+              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524528/untitled-4740_nbxn9k.jpg"
+            />
+          </div>
+        </ScrollReveal>
+
+        {/* Mountain lake sunset — horizontal */}
+        <ScrollReveal className="md:col-span-7 md:mt-16 group" delay={0.15}>
+          <div className="overflow-hidden relative">
+            <img
+              alt="Camera facing a glacial mountain lake at sunset"
+              className="w-full group-hover:scale-[1.02] transition-transform duration-1000"
+              src="https://res.cloudinary.com/diepbwdm5/image/upload/w_1200,q_auto,f_auto/v1774263516/untitled-6182_Large_n1evll.jpg"
+            />
           </div>
         </ScrollReveal>
       </div>
@@ -238,7 +226,7 @@ export default function HomePage({ onNavigate }) {
     <div className="page-content">
       <CinematicHero onNavigate={onNavigate} />
       <GlassTransition />
-      <BentoGallery />
+      <BehindTheScenes />
       <Footer />
     </div>
   );

@@ -143,6 +143,7 @@ const categories = [
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524556/%D7%9C%D7%94%D7%93%D7%A4%D7%A1%D7%94_pxdpaz.jpg', title: '', location: '' },
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524549/DSC_4223_k8welg.jpg', title: '', location: '' },
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524519/DJI_0725_hh7bpc.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774637106/DOT_8349_x48aak.jpg', title: '', location: '' },
     ],
   },
   {
@@ -241,6 +242,7 @@ const categories = [
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524559/DSC_6721_cpybtd.jpg', title: '', location: '' },
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524513/untitled-6050_w1iueo.jpg', title: '', location: '' },
       { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774524513/untitled-9497_vmoagz.jpg', title: '', location: '' },
+      { src: 'https://res.cloudinary.com/diepbwdm5/image/upload/w_800,q_auto,f_auto/v1774635311/750_2357_snckap.jpg', title: '', location: '' },
     ],
   },
 ];
