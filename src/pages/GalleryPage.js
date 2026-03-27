@@ -382,12 +382,15 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
-/* ─── Masonry Gallery: JS-based shortest-column-first, progressive loading ─── */
-const EAGER_COUNT = 9; // first 9 images load eagerly (above fold)
+/* ─── Masonry Gallery: instant render with progressive enhancement ─── */
+const EAGER_COUNT = 9;
 
 function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedCount = 3 }) {
   const gridPhotos = photos.slice(startIndex);
-  const [colCount, setColCount] = useState(3);
+  const [colCount, setColCount] = useState(() => {
+    const w = window.innerWidth;
+    return w <= 480 ? 1 : w <= 768 ? 2 : 3;
+  });
   const [dimensions, setDimensions] = useState(null);
 
   // Responsive column count
@@ -396,12 +399,11 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
       const w = window.innerWidth;
       setColCount(w <= 480 ? 1 : w <= 768 ? 2 : 3);
     };
-    update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Load dimensions from tiny placeholders (w_40 = ~1-2KB each, loads in ms)
+  // Load dimensions from tiny placeholders in background (for re-layout once ready)
   useEffect(() => {
     if (gridPhotos.length === 0) { setDimensions([]); return; }
     const results = new Array(gridPhotos.length).fill(null);
@@ -433,22 +435,28 @@ function MasonryGallery({ photos, startIndex, onPhotoClick, hasFeatured, pinnedC
     return [...first, ...shuffledRest];
   }, [gridPhotos.length, startIndex, pinnedCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!dimensions) return null;
-
-  // Distribute into columns using shortest-column-first
-  const gapUnit = 0.01;
+  // Distribute into columns — use dimensions if available, otherwise round-robin
   const columns = Array.from({ length: colCount }, () => ({ items: [], height: 0 }));
 
-  displayOrder.forEach((photoIdx) => {
-    const dim = dimensions[photoIdx] || { w: 4, h: 3 };
-    const ratio = dim.h / dim.w;
-    let shortest = 0;
-    for (let c = 1; c < colCount; c++) {
-      if (columns[c].height < columns[shortest].height) shortest = c;
-    }
-    columns[shortest].items.push(photoIdx);
-    columns[shortest].height += ratio + gapUnit;
-  });
+  if (dimensions) {
+    // Optimal: shortest-column-first based on real aspect ratios
+    const gapUnit = 0.01;
+    displayOrder.forEach((photoIdx) => {
+      const dim = dimensions[photoIdx] || { w: 4, h: 3 };
+      const ratio = dim.h / dim.w;
+      let shortest = 0;
+      for (let c = 1; c < colCount; c++) {
+        if (columns[c].height < columns[shortest].height) shortest = c;
+      }
+      columns[shortest].items.push(photoIdx);
+      columns[shortest].height += ratio + gapUnit;
+    });
+  } else {
+    // Instant: round-robin so content appears immediately
+    displayOrder.forEach((photoIdx, i) => {
+      columns[i % colCount].items.push(photoIdx);
+    });
+  }
 
   // Track which display indices are eager (above fold)
   let globalIdx = 0;
