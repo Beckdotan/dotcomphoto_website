@@ -17,15 +17,15 @@ export default function Navigation({ activePage, onNavigate, blurEnabled = true 
       maskImage: blurEnabled ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none',
       WebkitMaskImage: blurEnabled ? 'linear-gradient(to bottom, black 60%, transparent 100%)' : 'none',
     }}>
-      <div className="flex justify-between items-center px-8 py-4 w-full max-w-none">
+      <div className="flex justify-between items-center px-8 py-4 pb-8 w-full max-w-none">
         <button
           onClick={() => onNavigate('home')}
           className="hover:opacity-80 transition-opacity duration-300"
         >
           <img
-            src={`${process.env.PUBLIC_URL}/logo.png`}
-            alt="dotcomphoto"
-            className="h-8"
+            src={`${process.env.PUBLIC_URL}/favicon.png`}
+            alt="Dotan Beck"
+            className="h-12 -my-2"
           />
         </button>
         <div className="hidden md:flex items-center gap-10 font-headline text-[13px] font-light tracking-wide">
