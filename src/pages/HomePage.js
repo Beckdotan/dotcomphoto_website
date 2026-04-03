@@ -28,22 +28,26 @@ function CinematicHero({ onNavigate }) {
   const titleOpacity = p < 0.3 ? 1 : p < 0.5 ? 1 - (p - 0.3) / 0.2 : 0;
   const titleY = p < 0.3 ? 0 : -(p - 0.3) * 100;
 
-  const taglineOpacity = p < 0.35 ? 0 : p < 0.5 ? (p - 0.35) / 0.15 : p < 0.75 ? 1 : 1 - (p - 0.75) / 0.15;
+  const taglineOpacity = p < 0.35 ? 0 : p < 0.5 ? (p - 0.35) / 0.15 : p < 0.7 ? 1 : 1 - (p - 0.7) / 0.1;
   const taglineY = p < 0.35 ? 25 : p < 0.5 ? 25 - ((p - 0.35) / 0.15) * 25 : 0;
 
-  // Buttons: always visible, fade out together with the tagline at the end
-  const ctaOpacity = p < 0.75 ? 1 : 1 - (p - 0.75) / 0.15;
+  // Phase 3: "Dotan Beck" — fades in after quote fades out
+  const nameOpacity = p < 0.75 ? 0 : p < 0.85 ? (p - 0.75) / 0.1 : p < 0.93 ? 1 : 1 - (p - 0.93) / 0.07;
+  const nameY = p < 0.75 ? 20 : p < 0.85 ? 20 - ((p - 0.75) / 0.1) * 20 : 0;
+
+  // Buttons: always visible, fade out at the very end
+  const ctaOpacity = p < 0.93 ? 1 : 1 - (p - 0.93) / 0.07;
 
   const overlayDarken = Math.min(0.55, 0.35 + p * 0.35);
 
   return (
-    <header ref={heroRef} className="relative w-full" style={{ height: '300vh' }}>
+    <header ref={heroRef} className="relative w-full" style={{ height: '400vh' }}>
       <div className="sticky top-0 h-screen w-full overflow-hidden" style={{ zIndex: 1 }}>
         {/* Dynamic darkening overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse 130% 70% at 50% 40%, rgba(0,0,0,${overlayDarken * 0.6}) 0%, rgba(0,0,0,${overlayDarken * 0.2}) 60%, rgba(0,0,0,${overlayDarken}) 100%)`,
+            background: `radial-gradient(ellipse 130% 70% at 50% 40%, rgba(0,0,0,${Math.max(overlayDarken * 0.6, 0.2)}) 0%, rgba(0,0,0,${Math.max(overlayDarken * 0.2, 0.1)}) 60%, rgba(0,0,0,${Math.max(overlayDarken, 0.25)}) 100%)`,
           }}
         />
 
@@ -56,13 +60,13 @@ function CinematicHero({ onNavigate }) {
           >
             <span
               className="font-label text-tertiary text-xs tracking-[0.5em] uppercase mb-6 block"
-              style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
+              style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7), 0 2px 12px rgba(0,0,0,0.4)' }}
             >
               Landscape Art Photography
             </span>
             <h1
               className="font-headline text-4xl md:text-6xl lg:text-[5rem] text-on-surface font-light tracking-tight leading-[1.08]"
-              style={{ textShadow: '0 2px 40px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.3)' }}
+              style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.5)' }}
             >
               What the Eye Sees.<br />What the Heart <span className="italic">Remembers</span>.<br />What the Art Becomes.
             </h1>
@@ -95,12 +99,25 @@ function CinematicHero({ onNavigate }) {
           >
             <div className="w-16 h-[1px] bg-tertiary/40 mx-auto mb-8" />
             <p
-              className="font-headline text-2xl md:text-4xl text-on-surface/90 font-light italic leading-relaxed"
-              style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
+              className="font-headline text-3xl md:text-[2.75rem] text-on-surface/90 font-light italic leading-relaxed"
+              style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.5)' }}
             >
               "Night photography is a conversation with time. You open the shutter, and for thirty seconds, the universe paints itself onto your sensor."
             </p>
             <div className="w-16 h-[1px] bg-tertiary/40 mx-auto mt-8" />
+          </div>
+
+          {/* Phase 3: by Dotan Beck */}
+          <div
+            className="absolute text-center px-6 pointer-events-none"
+            style={{ opacity: nameOpacity, transform: `translateY(${nameY}px)` }}
+          >
+            <p
+              className="font-headline text-2xl md:text-4xl text-tertiary font-light italic tracking-wide"
+              style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.5)' }}
+            >
+              Dotan Beck
+            </p>
           </div>
         </div>
 

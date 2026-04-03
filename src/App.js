@@ -3,22 +3,19 @@ import videos from './videos';
 import useFrameLoader from './useFrameLoader';
 import ScrollCanvas from './ScrollCanvas';
 import Navigation from './components/Navigation';
-import BackgroundSwitcher from './components/BackgroundSwitcher';
 import FilmGrain from './components/FilmGrain';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import GalleryPage from './pages/GalleryPage';
 import LearningPage from './pages/LearningPage';
 
-export default function App() {
-  const [activeVideo, setActiveVideo] = useState(0);
-  const [activePage, setActivePage] = useState('home');
-  const { progress, loaded, framesRef } = useFrameLoader(videos);
+// Video assignment per page: home = video 0, about = video 1
+const PAGE_VIDEO = { home: 0, about: 1 };
 
-  const handleBgSwitch = useCallback((idx) => {
-    if (idx === activeVideo) return;
-    setActiveVideo(idx);
-  }, [activeVideo]);
+export default function App() {
+  const [activePage, setActivePage] = useState('home');
+  const activeVideo = PAGE_VIDEO[activePage] ?? 0;
+  const { progress, loaded, framesRef } = useFrameLoader(videos);
 
   const handleNavigate = useCallback((page) => {
     if (page === activePage) return;
@@ -85,6 +82,15 @@ export default function App() {
         loaded={loaded}
       />
 
+      {/* Darken video background on About page using site's darkest color */}
+      {activePage === 'about' && (
+        <div
+          className="fixed inset-0 pointer-events-none"
+          style={{ zIndex: 0, backgroundColor: 'rgba(17, 20, 18, 0.35)' }}
+        />
+      )}
+
+
       {/* Navigation */}
       <Navigation activePage={activePage} onNavigate={handleNavigate} blurEnabled={navBlur} />
 
@@ -93,15 +99,6 @@ export default function App() {
 
       {/* Film grain texture */}
       <FilmGrain />
-
-      {/* Background Switcher — only on home */}
-      {activePage === 'home' && (
-        <BackgroundSwitcher
-          videos={videos}
-          activeVideo={activeVideo}
-          onSwitch={handleBgSwitch}
-        />
-      )}
     </>
   );
 }
